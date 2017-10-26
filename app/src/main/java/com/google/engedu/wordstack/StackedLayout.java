@@ -35,6 +35,9 @@ public class StackedLayout extends LinearLayout {
          **  YOUR CODE GOES HERE
          **
          **/
+        if(!tiles.empty())removeView(tiles.peek());
+        tiles.push(tile);
+        addView(tile);
     }
 
     public View pop() {
@@ -44,6 +47,9 @@ public class StackedLayout extends LinearLayout {
          **  YOUR CODE GOES HERE
          **
          **/
+        popped= tiles.pop();
+        removeView(popped);
+        addView(tiles.peek());
         return popped;
     }
 
@@ -61,5 +67,8 @@ public class StackedLayout extends LinearLayout {
          **  YOUR CODE GOES HERE
          **
          **/
+        tiles.clear();
+        removeAllViews();
+
     }
 }

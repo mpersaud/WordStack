@@ -142,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onStartGame(View view) {
+        System.out.println("here");
+        ViewGroup word1LinearLayout = (ViewGroup) findViewById(R.id.word1);
+        word1LinearLayout.removeAllViews();
+        ViewGroup word2LinearLayout = (ViewGroup) findViewById(R.id.word2);
+        word2LinearLayout.removeAllViews();
+
+        stackedLayout.clear();
         TextView messageBox = (TextView) findViewById(R.id.message_box);
         messageBox.setText("Game started");
         /**
@@ -149,13 +156,22 @@ public class MainActivity extends AppCompatActivity {
          **  YOUR CODE GOES HERE
          **
          **/
+
         word1=randomString();
         word2=randomString();
-        System.out.println(word1);
-        System.out.println(word2);
+        //System.out.println(word1);
+        //System.out.println(word2);
+        String str = shuffle(word1,word2);
+        //System.out.println(str+"\n");
+
+        for(int i =str.length()-1;i>=0;i--){
+            LetterTile tile = new LetterTile(view.getContext(),str.charAt(i));
+            stackedLayout.push(tile);
+        }
 
         return true;
     }
+
 
     public boolean onUndo(View view) {
         /**
@@ -172,5 +188,27 @@ public class MainActivity extends AppCompatActivity {
             i = random.nextInt(words.size());
         }
         return words.get(i);
+    }
+
+    public String shuffle(String w1, String w2){
+        String str="";
+        int i=0;
+        int j=0;
+
+        while(i!=w1.length() && j!=w2.length()){
+            int k = random.nextInt(2);
+            if(k==0){
+                str+=w1.charAt(i);
+                i++;
+            }
+            else{
+                str+=w2.charAt(j);
+                j++;
+            }
+        }
+        if(i==w1.length())str+=w2.substring(j);
+        else str+=w1.substring(i);
+
+        return str;
     }
 }
