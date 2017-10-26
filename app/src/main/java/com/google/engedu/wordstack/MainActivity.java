@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                  **  YOUR CODE GOES HERE
                  **
                  **/
+                words.add(word);
             }
         } catch (IOException e) {
             Toast toast = Toast.makeText(this, "Could not load dictionary", Toast.LENGTH_LONG);
@@ -148,6 +149,11 @@ public class MainActivity extends AppCompatActivity {
          **  YOUR CODE GOES HERE
          **
          **/
+        word1=randomString();
+        word2=randomString();
+        System.out.println(word1);
+        System.out.println(word2);
+
         return true;
     }
 
@@ -158,5 +164,13 @@ public class MainActivity extends AppCompatActivity {
          **
          **/
         return true;
+    }
+
+    public String randomString(){
+       int i= random.nextInt(words.size());
+        while(words.get(i).length()!=WORD_LENGTH) {
+            i = random.nextInt(words.size());
+        }
+        return words.get(i);
     }
 }
