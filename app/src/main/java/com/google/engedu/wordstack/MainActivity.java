@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Random random = new Random();
     private StackedLayout stackedLayout;
     private String word1, word2;
+    private Stack<LetterTile> placedTiles = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN && !stackedLayout.empty()) {
                 LetterTile tile = (LetterTile) stackedLayout.peek();
                 tile.moveToViewGroup((ViewGroup) v);
+                placedTiles.push(tile);
                 if (stackedLayout.empty()) {
                     TextView messageBox = (TextView) findViewById(R.id.message_box);
                     messageBox.setText(word1 + " " + word2);
@@ -179,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
          **  YOUR CODE GOES HERE
          **
          **/
+        LetterTile tile =placedTiles.pop();
+        tile.moveToViewGroup(stackedLayout);
         return true;
     }
 
