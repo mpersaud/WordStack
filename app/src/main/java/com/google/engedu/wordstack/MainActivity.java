@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
         verticalLayout.addView(stackedLayout, 3);
 
         View word1LinearLayout = findViewById(R.id.word1);
-        word1LinearLayout.setOnTouchListener(new TouchListener());
-        //word1LinearLayout.setOnDragListener(new DragListener());
+       // word1LinearLayout.setOnTouchListener(new TouchListener());
+        word1LinearLayout.setOnDragListener(new DragListener());
         View word2LinearLayout = findViewById(R.id.word2);
-        word2LinearLayout.setOnTouchListener(new TouchListener());
-        //word2LinearLayout.setOnDragListener(new DragListener());
+       // word2LinearLayout.setOnTouchListener(new TouchListener());
+        word2LinearLayout.setOnDragListener(new DragListener());
     }
 
     private class TouchListener implements View.OnTouchListener {
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     // Dropped, reassign Tile to the target Layout
                     LetterTile tile = (LetterTile) event.getLocalState();
                     tile.moveToViewGroup((ViewGroup) v);
+                    placedTiles.push(tile);
                     if (stackedLayout.empty()) {
                         TextView messageBox = (TextView) findViewById(R.id.message_box);
                         messageBox.setText(word1 + " " + word2);
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onStartGame(View view) {
-        System.out.println("here");
+
         ViewGroup word1LinearLayout = (ViewGroup) findViewById(R.id.word1);
         word1LinearLayout.removeAllViews();
         ViewGroup word2LinearLayout = (ViewGroup) findViewById(R.id.word2);
@@ -161,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
 
         word1=randomString();
         word2=randomString();
-        //System.out.println(word1);
-        //System.out.println(word2);
+        System.out.println(word1);
+        System.out.println(word2);
         String str = shuffle(word1,word2);
         //System.out.println(str+"\n");
 
@@ -181,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
          **  YOUR CODE GOES HERE
          **
          **/
+        if(placedTiles.empty())return false;
         LetterTile tile =placedTiles.pop();
         tile.moveToViewGroup(stackedLayout);
         return true;
